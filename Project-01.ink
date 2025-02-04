@@ -17,3 +17,76 @@
 
 */
 
+// Global Variables
+VAR health = 5
+VAR sprite_name = ""
+VAR swords = 0
+VAR treasure_found = false
+VAR courage = 0
+VAR visited_memory = false
+VAR visited_forest = false
+VAR visited_east_path = false
+VAR visited_west_path = false
+
+== memory ==
+{ visited_memory == false:
+    ~ visited_memory = true
+}
+Before you stands the forest of Golden. You wish you had a sprite with you now—the forest might seem less scary then.
+
+What was your pet's name?
++ [Feyliya] -> set_sprite_name("Feyliya")
++ [Luna] -> set_sprite_name("Luna")
++ [Cirno] -> set_sprite_name("Cirno")
+
+== set_sprite_name(name) ==
+~ sprite_name = name
+-> forest_entrance
+
+== forest_entrance ==
+{ visited_forest == false:
+    ~ visited_forest = true
+}
+You stand at the edge of the forest of Golden. The trees and flickering light play tricks on your eyes—but with {sprite_name} by your side, you feel a bit of comfort.
+
+What do you do?
++ [Pick up a sword on the ground] -> sword_pickup
++ [Take the east path] -> east_path
++ [Take the west path] -> west_path
+
+== sword_pickup ==
+You pick up a silver sword.
+~ swords += 1
+-> forest_entrance
+
+== east_path ==
+{ visited_east_path == false:
+    ~ visited_east_path = true
+}
+You walk down the east path. The trail is narrow and shadowed. Soon, you see something on the rock wall.
+
+What do you do?
++ [Examine the runes] -> runes
++ [Return to the forest entrance] -> forest_entrance
+
+== runes ==
+The runes seem to stimulate your energy. You feel your courage rising.
+~ courage += 1
+-> forest_entrance
+
+== west_path ==
+{ visited_west_path == false:
+    ~ visited_west_path = true
+}
+You take the west path and soon discover a room with a mysterious treasure chest inside an old oak.
+
+What do you do?
++ [Open the treasure chest] -> treasure
++ [Return to the forest entrance] -> forest_entrance
+
+== treasure ==
+You open the shining box and find HP recovery potions.
+~ treasure_found = true
+~ health += 2
+-> forest_entrance
+
